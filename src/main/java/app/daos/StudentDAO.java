@@ -95,8 +95,12 @@ public class StudentDAO {
         }
     }
 
-
-
-
-
-}
+    public Student getStudentById(Long Id) {
+        try (EntityManager em = emf.createEntityManager()) {
+            Student student = em.find(Student.class, Id);
+            return student;
+            } catch (Exception e) {
+                throw new ApiException(401, "Error finding student", e);
+            }
+        }
+    }

@@ -42,4 +42,16 @@ public class Student {
     protected void created(){
         createdAt = LocalDateTime.now();
     }
+
+    public Student(Student student){
+        this.id = student.getId();
+        this.name = student.getName();
+        this.age = student.getAge();
+        this.phone = student.getPhone();
+        this.courseId = student.getCourseId();
+        this.email = student.getEmail();
+        this.status = student.getStatus();
+        this.enrollmentDate = student.getEnrollmentDate();
+        this.dateOfBirth = student.getDateOfBirth();
+    }
 }
