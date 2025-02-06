@@ -3,14 +3,18 @@ package app.entities;
 import app.enums.StudentStatus;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @ToString
+@DynamicUpdate
 @Entity
 @Table(name = "student")
 public class Student {
@@ -30,4 +34,12 @@ public class Student {
     private LocalDate enrollmentDate;
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
+
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    protected void created(){
+        createdAt = LocalDateTime.now();
+    }
 }

@@ -7,7 +7,6 @@ import app.daos.StudentDAO;
 import app.entities.Course;
 import app.entities.Person;
 import app.entities.Student;
-import app.enums.CoffeeType;
 import app.enums.StudentStatus;
 import app.exceptions.ApiException;
 import jakarta.persistence.EntityManagerFactory;
@@ -21,12 +20,11 @@ public class Main {
 
     private static final EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
     private static final PersonDAO personDAO = PersonDAO.getInstance(emf);
+
     private static final StudentDAO studentDAO = StudentDAO.getInstance(emf);
     private static final CourseDAO courseDAO = CourseDAO.getInstance(emf);
 
     public static void main(String[] args) {
-
-        CoffeeType coffeeType = CoffeeType.AMERICANO;
 
         try {
             Person person = Person.builder()

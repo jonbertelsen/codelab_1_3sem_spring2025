@@ -11,12 +11,12 @@ import java.util.List;
 
 public class StudentDAO {
 
-    private static EntityManagerFactory emf;
-    private static StudentDAO instance = null;
+    private static  EntityManagerFactory emf;
+    private static StudentDAO instance;
 
     private StudentDAO() {}
 
-    public static StudentDAO getInstance(EntityManagerFactory _emf) {
+    public static  StudentDAO getInstance(EntityManagerFactory _emf) {
         if (emf == null) {
             emf = _emf;
             instance = new StudentDAO();
