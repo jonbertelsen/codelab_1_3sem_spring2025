@@ -29,7 +29,7 @@ public class CourseDAO {
                 return course;
             } catch (Exception e) {
                 em.getTransaction().rollback();
-                throw new ApiException(401, "Error creating course");
+                throw new ApiException(401, "Error creating course", e);
             }
         }
     }

@@ -7,6 +7,8 @@ import app.daos.StudentDAO;
 import app.entities.Course;
 import app.entities.Person;
 import app.entities.Student;
+import app.enums.CoffeeType;
+import app.enums.StudentStatus;
 import app.exceptions.ApiException;
 import jakarta.persistence.EntityManagerFactory;
 
@@ -24,8 +26,11 @@ public class Main {
 
     public static void main(String[] args) {
 
+        CoffeeType coffeeType = CoffeeType.AMERICANO;
+
         try {
             Person person = Person.builder()
+
                       .name("John Snow")
                       .age(30)
                       .build();
@@ -36,7 +41,7 @@ public class Main {
             System.err.println(e.getMessage());
             e.printStackTrace();
         } finally {
-           // shutdown();
+            shutdown();
         }
     }
 
@@ -50,15 +55,15 @@ public class Main {
     private static void runTasks(){
         // 1. Create new student
         Student student = Student.builder()
-             .name("Alice Johnson")
-             .age(22)
-             .phone("123-456-7890")
-             .courseId(1L)
-             .email("alice@example.com")
-             .status(StudentStatus.ACTIVE) // Assuming StudentStatus is an enum
-             .enrollmentDate(LocalDate.of(2023, 9, 1))
-             .dateOfBirth(LocalDate.of(2001, 5, 15))
-             .build();
+                                 .name("Alice Johnson")
+                                 .age(22)
+                                 .phone("123-456-7890")
+                                 .courseId(1L)
+                                 .email("alice@example.com")
+                                 .status(StudentStatus.ACTIVE) // Assuming StudentStatus is an enum
+                                 .enrollmentDate(LocalDate.of(2023, 9, 1))
+                                 .dateOfBirth(LocalDate.of(2001, 5, 15))
+                                 .build();
         student = studentDAO.createStudent(student);
         System.out.println("1. Created student" + student);
 
@@ -89,7 +94,7 @@ public class Main {
         // 3. Update student information
         student = Student.builder()
              .id(1L)
-             .name("Alice Peterson")
+             .name(student.getName())
              .age(25)
              .phone("123-456-7890")
              .courseId(2L)
@@ -127,6 +132,11 @@ public class Main {
         students.stream()
                 .filter(s -> s.getCourseId() == 1L)
                 .forEach(System.out::println);
+
+        // 11. Update student name
+
+        Student studentWithNewName = studentDAO.updateStudentName(student.getId(), "Sansa Stark");
+        System.out.println("Update name: " + studentWithNewName);
 
     }
 

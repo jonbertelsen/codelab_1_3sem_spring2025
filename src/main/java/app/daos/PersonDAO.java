@@ -23,15 +23,12 @@ public class PersonDAO {
 
     public Person createPerson(Person person) {
         try (EntityManager em = emf.createEntityManager()) {
-            try {
                 em.getTransaction().begin();
                 em.persist(person);
                 em.getTransaction().commit();
                 return person;
             } catch (Exception e) {
-                em.getTransaction().rollback();
-                throw new ApiException(401, "Error creating person");
-            }
+                throw new ApiException(401, "Error creating person", e);
         }
     }
 

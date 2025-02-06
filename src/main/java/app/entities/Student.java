@@ -1,6 +1,6 @@
 package app.entities;
 
-import app.StudentStatus;
+import app.enums.StudentStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,6 +17,7 @@ public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Setter
     private String name;
     private int age;
     private String phone;

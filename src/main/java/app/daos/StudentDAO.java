@@ -33,22 +33,36 @@ public class StudentDAO {
                 return student;
             } catch (Exception e) {
                 em.getTransaction().rollback();
-                throw new ApiException(401, "Error creating student");
+                throw new ApiException(401, "Error creating student", e);
             }
         }
     }
 
     public Student updateStudent(Student student) {
         try (EntityManager em = emf.createEntityManager()) {
-            try {
                 em.getTransaction().begin();
-                Student updatedStudent = em.merge(student);
+                    Student updatedStudent = em.merge(student);
                 em.getTransaction().commit();
                 return updatedStudent;
             } catch (Exception e) {
-                em.getTransaction().rollback();
-                throw new ApiException(401, "Error updating student");
+                throw new ApiException(401, "Error updating student", e);
+        }
+    }
+
+    // SLQ: update student set name = 'sansa stark' where id = 1
+
+    public Student updateStudentName(Long id, String name) {
+        try (EntityManager em = emf.createEntityManager()) {
+            Student student = em.find(Student.class, id);
+            if (student == null){
+                throw new ApiException(401, "Student not found for update");
             }
+            em.getTransaction().begin();
+            student.setName(name);
+            em.getTransaction().commit();
+            return student;
+        } catch (Exception e) {
+            throw new ApiException(401, "Error updating student", e);
         }
     }
 
@@ -64,7 +78,7 @@ public class StudentDAO {
                 em.getTransaction().commit();
             } catch (Exception e) {
                 em.getTransaction().rollback();
-                throw new ApiException(401, "Error removing student");
+                throw new ApiException(401, "Error removing student", e);
             }
         }
     }
@@ -76,7 +90,7 @@ public class StudentDAO {
                 List<Student> students = query.getResultList();
                 return students;
             } catch (Exception e) {
-                throw new ApiException(401, "Error creating student");
+                throw new ApiException(401, "Error creating student", e);
             }
         }
     }
